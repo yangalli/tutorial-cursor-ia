@@ -1,0 +1,34 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Next.js + TypeScript Best Practices
+
+- Use file-based routing and keep routes clean and RESTful
+- Co-locate components with their usage when appropriate
+- Use `srcapp/` directory (Next.js 13+) and server components where possible
+- Prefer React Server Components (RSC) for non-interactive content
+- Use `use client` directive only when necessary
+- Use `async/await` with `fetch()` in server components for data fetching
+- Centralize API functions in `services/`
+- Use Zod for runtime data validation and TypeScript safety
+- Use SWR for client-side data fetching and caching
+- Avoid anonymous default exports—use named exports for clarity
+- Use Tailwind CSS for scoped styling
+- Use `Head` from `next/head` for setting meta tags per page
+- Leverage dynamic imports (`next/dynamic`) for heavy components
+- Use `getStaticProps`, `getServerSideProps`, or `generateMetadata` for SEO and SSR
+- Group constants, types, and interfaces in a `types/` or `constants/` folder
+- Prefer composition over inheritance in React components
+- Use `eslint`, `prettier`, and `typescript` with strict mode enabled
+- Keep components pure and avoid side effects in render
+- Use `React.FC<Props>` with clear prop types
+- Use `Partial<>`, `Pick<>`, `Omit<>` to shape types
+- Avoid prop drilling; use context or Zustand when needed
+- Keep `pages` or `routes` directory free of business logic
+- Use `.env.local` for environment-specific variables (never commit them)
+- Prefer absolute imports (`@/components/...`) for readability
+- Keep useEffect logic minimal and dependency arrays accurate
+- Use error boundaries and proper error handling (`try/catch`, fallback UIs)
+<!-- - Write unit tests (Jest, Vitest) and integration tests (Playwright, Testing Library) -->
