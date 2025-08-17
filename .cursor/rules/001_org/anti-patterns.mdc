@@ -3,14 +3,21 @@ description:
 globs:
 alwaysApply: true
 ---
-# Anti-Patterns to Avoid
+# Anti-Patterns para evitar e qual abordagem seguir
 
-- Bloated JavaScript or Typescript Files: Having large, monolithic JS or TS files that handle multiple unrelated functionalities. Instead, use modular code organization and consider component-based architecture.
-- CSS Specificity Wars: Overusing !important, deeply nested selectors, or overly specific selectors to override styles. Instead, use BEM/CUBE CSS methodology and maintain a clear CSS architecture.
-- Global CSS/JavaScript: Relying heavily on global styles and scripts that affect the entire application. Instead, use CSS modules, scoped styles, or CSS-in-JS solutions for better encapsulation.
-- Event Handler Soup: Attaching too many event listeners directly to DOM elements or using inline event handlers. Instead, use event delegation and maintain clean separation of concerns.
-- Non-Semantic HTML: Using <div> and <span> for everything, ignoring semantic HTML elements. Instead, use appropriate HTML5 elements (<article>, <section>, <nav>, etc.) for better accessibility and SEO.
-- Direct DOM Manipulation: Excessive direct DOM manipulation leading to poor performance and maintainability. Instead, use modern frameworks/libraries or virtual DOM approaches when needed.
-- Unresponsive Design: Building fixed-width layouts or ignoring mobile devices. Instead, use mobile-first approach, responsive design patterns, and fluid layouts.
-- Performance Ignorance: Loading large unoptimized assets, not using lazy loading, or ignoring bundle sizes. Instead, implement proper asset optimization, code splitting, and modern loading techniques.
-- Accessibility Neglect: Not considering keyboard navigation, screen readers, or ARIA attributes. Instead, follow WCAG guidelines and test with accessibility tools.
+•	Evitar Arquivos JavaScript ou Typescript Inchados: Arquivos JS ou TS grandes e monolíticos que lidam com múltiplas funcionalidades não relacionadas.
+→ Em vez disso, use organização modular do código e considere uma arquitetura baseada em componentes.
+•	Evitar Guerras de Especificidade no CSS: Uso excessivo de !important, seletores profundamente aninhados ou extremamente específicos para sobrescrever estilos.
+→ Prefira metodologias como BEM ou CUBE CSS e mantenha uma arquitetura clara de estilos.
+•	Evitar CSS/JavaScript Globais: Dependência excessiva de estilos e scripts globais que afetam toda a aplicação.
+→ Use módulos de CSS, estilos com escopo limitado ou soluções como CSS-in-JS para melhor encapsulamento.
+•	Evitar Sopa de Manipuladores de Eventos: Atribuição de muitos event listeners diretamente a elementos do DOM ou uso de manipuladores inline.
+→ Use delegação de eventos e mantenha uma separação clara de responsabilidades.
+•	Evitar HTML Não Semântico: Uso de <div> e <span> para tudo, ignorando elementos semânticos do HTML.
+→ Utilize elementos apropriados do HTML5, como <article>, <section>, <nav>, etc., para melhorar acessibilidade e SEO.
+•	Evitar Manipulação Direta do DOM: Manipulação direta excessiva do DOM, prejudicando desempenho e manutenibilidade.
+→ Prefira frameworks modernos ou abordagens com virtual DOM quando necessário.
+•	Evitar Design Não Responsivo: Criação de layouts com largura fixa ou que ignoram dispositivos móveis.
+→ Use abordagens mobile-first, padrões de design responsivo e layouts fluidos.
+•	Evitar Ignorar Desempenho: Carregamento de ativos grandes e não otimizados, não usar lazy loading, ou ignorar o tamanho dos bundles.
+→ Implemente otimização de ativos, divisão de código (code splitting) e técnicas modernas de carregamento.

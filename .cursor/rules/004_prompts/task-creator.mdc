@@ -1,6 +1,6 @@
 ---
-description: 
-globs: 
+description:
+globs:
 alwaysApply: false
 ---
  # Task Creator
@@ -9,27 +9,27 @@ When a new task or feature is specified, create a markdown file named `{task-nam
 
 ## Structure of Task Files
 
-1. **Task Description**
-   - Clear description of what needs to be accomplished
-   - Business context and requirements
-   - Any constraints or limitations
+1. **Descrição da Tarefa**
+   - Descrição clara do que precisa ser realizado
+   - Contexto de negócio e requisitos
+   - Quaisquer restrições ou limitações
 
-2. **Development Tasks**
-   - Numbered list of specific development steps to complete
-   - Files that need to be created or modified
-   - Database changes required
-   - Testing requirements
-   - Any dependencies on other tasks
+2. **Tarefas de Desenvolvimento**
+   - Lista numerada de etapas específicas de desenvolvimento a serem concluídas
+   - Arquivos que precisam ser criados ou modificados
+   - Alterações necessárias no banco de dados
+   - Requisitos de testes
+   - Quaisquer dependências de outras tarefas
 
-3. **Acceptance Criteria**
-   - List of criteria that must be met for the task to be considered complete
-   - Expected behavior
-   - Edge cases to handle
+3. **Critérios de Aceitação**
+   - Lista de critérios que devem ser atendidos para que a tarefa seja considerada completa
+   - Comportamento esperado
+   - Casos extremos a serem tratados
 
-4. **Technical Considerations**
-   - Potential challenges
-   - Performance considerations
-   - Security concerns
-   - Best practices to follow
+4. **Considerações Técnicas**
+   - Possíveis desafios
+   - Considerações de desempenho
+   - Questões de segurança
+   - Melhores práticas a serem seguidas
 
-The task file should be detailed enough for a developer to understand what needs to be done and how to implement it correctly following the project's conventions and best practices. Include sufficient context from existing code patterns when relevant.
+O arquivo de tarefa deve ser detalhado o suficiente para que um desenvolvedor entenda o que precisa ser feito e como implementar corretamente seguindo as convenções e melhores práticas do projeto. Inclua contexto suficiente dos padrões de código existentes quando relevante.

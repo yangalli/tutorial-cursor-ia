@@ -1,0 +1,60 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+✅ Padrões de Design com Tailwind e shadcn/ui
+
+Utility-First Pattern (Tailwind)
+	•	Propósito: Estilizar diretamente no HTML com classes utilitárias, evitando folhas de estilo longas
+	•	Brilha Quando: Você quer iterar rapidamente na interface com consistência visual
+
+Componente de UI Pronto (shadcn/ui)
+	•	Propósito: Reaproveitar componentes acessíveis e bonitos com comportamento bem definido
+	•	Brilha Quando: Você precisa de componentes como botões, modais, tabs e tooltips com bom UX e acessibilidade
+
+Customização via className (Tailwind + shadcn)
+	•	Propósito: Ajustar o visual de um componente shadcn sem quebrar sua estrutura
+	•	Brilha Quando: Precisa adaptar o estilo à identidade visual mantendo as boas práticas do componente
+
+Tokenização com Variáveis de Tema
+	•	Propósito: Centralizar cores, espaçamentos e fontes no arquivo de configuração do Tailwind
+	•	Brilha Quando: Deseja consistência visual e facilidade para aplicar temas claros/escuros
+
+Layout com Grid e Flex
+	•	Propósito: Criar layouts responsivos e flexíveis com classes como grid, flex, gap, justify, etc.
+	•	Brilha Quando: Está construindo seções dinâmicas, painéis, cards ou listas adaptáveis
+
+⸻
+
+❌ Antipadrões a Evitar com Tailwind e shadcn/ui
+
+Classe utilitária em excesso (Utility Spaghetti)
+	•	Problema: Classes demais em um único elemento tornam o código ilegível
+	•	Alternativa: Use clsx, cn() (do shadcn) ou crie componentes reutilizáveis com className pré-definido
+
+Ignorar acessibilidade dos componentes
+	•	Problema: Modificar diretamente o DOM dos componentes sem manter atributos como aria, role ou foco
+	•	Alternativa: Sempre respeite a estrutura acessível dos componentes shadcn
+
+Estilização global desnecessária
+	•	Problema: Voltar a criar CSS global com Tailwind, quebrando o propósito utility-first
+	•	Alternativa: Prefira @apply com parcimônia ou componetização com className nomeado
+
+Reinventar componentes existentes
+	•	Problema: Recriar manualmente botões, modais, ou tooltips que já existem no shadcn/ui
+	•	Alternativa: Utilize os componentes prontos e personalize via props e className
+
+Misturar estilos arbitrários com design system
+	•	Problema: Usar cores/tamanhos que não existem na paleta definida no Tailwind config
+	•	Alternativa: Sempre utilizar theme() e tokens predefinidos para garantir consistência
+
+⸻
+
+📌 Dicas Complementares
+	•	Use o utilitário cn() do shadcn para combinar classes de forma segura
+	•	Explore o plugin tailwind-variants para gerar variantes condicionais de componentes
+	•	Mantenha a estrutura dos componentes shadcn/ui, evitando mudanças diretas na marcação sem necessidade
+	•	Use @layer components e @apply apenas para abstrair padrões recorrentes e comedidos
+	•	Utilize o modo escuro (dark:) e o sistema de temas embutido no tailwind.config.js

@@ -1,27 +1,28 @@
 ---
 description: This role tries to make sure the AI asked me about important implementation details before doing it by itself.
-globs: 
+globs:
 alwaysApply: true
 ---
 
-# Important: Ask about implementation details
+📌 Importante: Pergunte sobre os detalhes de implementação
 
-Before writing code, if there is an important implementation detail that you are deciding, ask me about it and let's decide together.
+Antes de escrever qualquer código, se houver algum detalhe importante de implementação a ser decidido, pergunte para mim e vamos decidir juntos.
 
-For example, if there are multiple paths, stop and ask me which one I would prefer
+Por exemplo, se houver múltiplos caminhos possíveis, pause e pergunte qual eu prefiro.
 
-For example, if you're deciding about a particular abstraction, stop and ask me.
+Se estiver decidindo sobre uma abstração específica, pare e me consulte antes de continuar.
 
-# Implementation Details
+⸻
 
-The assistant will ask clarifying questions about implementation details before generating any code. This includes:
+🧩 Detalhes de Implementação
 
-- Understanding the specific requirements and constraints
-- Clarifying technical approach and architecture decisions
-- Confirming integration points with existing systems
-- Validating assumptions about data models and relationships
-- Determining appropriate error handling and edge cases
-- Identifying potential performance considerations
-- Confirming testing requirements and strategy
+O assistente deverá fazer perguntas de esclarecimento sobre os detalhes da implementação antes de gerar qualquer código. Isso inclui:
+	•	Compreender os requisitos e restrições específicas
+	•	Esclarecer a abordagem técnica e decisões de arquitetura
+	•	Confirmar pontos de integração com sistemas existentes
+	•	Validar suposições sobre modelos de dados e seus relacionamentos
+	•	Determinar como será o tratamento de erros e casos extremos
+	•	Identificar considerações de performance
+	•	Confirmar os requisitos e a estratégia de testes
 
-Only after gathering sufficient implementation context will the assistant proceed with code generation.
+Somente após reunir contexto suficiente sobre a implementação, o assistente poderá prosseguir com a geração do código.

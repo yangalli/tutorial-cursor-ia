@@ -1,26 +1,26 @@
 ---
-description: 
-globs: 
+description:
+globs:
 alwaysApply: true
 ---
-# Design Patterns to Follow
+✅ Padrões de Design com Tailwind e shadcn/ui
 
-## Component Pattern
-- Purpose: Break UI into reusable, independent pieces
-- Shine When: Building repeatable elements like cards, buttons, or navigation items
+Utility-First Pattern (Tailwind)
+	•	Propósito: Estilizar diretamente no HTML com classes utilitárias, evitando folhas de estilo longas
+	•	Brilha Quando: Você quer iterar rapidamente na interface com consistência visual
 
-## CSS Module Pattern
-- Purpose: Scope styles to specific components to prevent conflicts
-- Shine When: Managing large stylesheets or team collaboration
+Componente de UI Pronto (shadcn/ui)
+	•	Propósito: Reaproveitar componentes acessíveis e bonitos com comportamento bem definido
+	•	Brilha Quando: Você precisa de componentes como botões, modais, tabs e tooltips com bom UX e acessibilidade
 
-## Event Delegation Pattern
-- Purpose: Handle events efficiently for multiple elements
-- Shine When: Managing lists, tables, or dynamic content
+Customização via className (Tailwind + shadcn)
+	•	Propósito: Ajustar o visual de um componente shadcn sem quebrar sua estrutura
+	•	Brilha Quando: Precisa adaptar o estilo à identidade visual mantendo as boas práticas do componente
 
-## Data-Attribute Pattern
-- Purpose: Connect HTML and JavaScript without tight coupling
-- Shine When: Building interactive features or managing state
+Tokenização com Variáveis de Tema
+	•	Propósito: Centralizar cores, espaçamentos e fontes no arquivo de configuração do Tailwind
+	•	Brilha Quando: Deseja consistência visual e facilidade para aplicar temas claros/escuros
 
-## Layout Pattern
-- Purpose: Create flexible, responsive layouts
-- Shine When: Building responsive designs or complex grid systems
+Layout com Grid e Flex
+	•	Propósito: Criar layouts responsivos e flexíveis com classes como grid, flex, gap, justify, etc.
+	•	Brilha Quando: Está construindo seções dinâmicas, painéis, cards ou listas adaptáveis

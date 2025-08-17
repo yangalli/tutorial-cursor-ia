@@ -3,32 +3,32 @@ description:
 globs:
 alwaysApply: false
 ---
-# Next.js + TypeScript Best Practices
+# Next.js + TypeScript Melhores Práticas
 
-- Use file-based routing and keep routes clean and RESTful
-- Co-locate components with their usage when appropriate
-- Use `srcapp/` directory (Next.js 13+) and server components where possible
-- Prefer React Server Components (RSC) for non-interactive content
-- Use `use client` directive only when necessary
-- Use `async/await` with `fetch()` in server components for data fetching
-- Centralize API functions in `services/`
-- Use Zod for runtime data validation and TypeScript safety
-- Use SWR for client-side data fetching and caching
-- Avoid anonymous default exports—use named exports for clarity
-- Use Tailwind CSS for scoped styling
-- Use `Head` from `next/head` for setting meta tags per page
-- Leverage dynamic imports (`next/dynamic`) for heavy components
-- Use `getStaticProps`, `getServerSideProps`, or `generateMetadata` for SEO and SSR
-- Group constants, types, and interfaces in a `types/` or `constants/` folder
-- Prefer composition over inheritance in React components
-- Use `eslint`, `prettier`, and `typescript` with strict mode enabled
-- Keep components pure and avoid side effects in render
-- Use `React.FC<Props>` with clear prop types
-- Use `Partial<>`, `Pick<>`, `Omit<>` to shape types
-- Avoid prop drilling; use context or Zustand when needed
-- Keep `pages` or `routes` directory free of business logic
-- Use `.env.local` for environment-specific variables (never commit them)
-- Prefer absolute imports (`@/components/...`) for readability
-- Keep useEffect logic minimal and dependency arrays accurate
-- Use error boundaries and proper error handling (`try/catch`, fallback UIs)
-<!-- - Write unit tests (Jest, Vitest) and integration tests (Playwright, Testing Library) -->
+- Use roteamento baseado em arquivos e mantenha as rotas limpas e RESTful
+- Co-locar componentes com seu uso quando apropriado
+- Use o diretório `srcapp/` (Next.js 13+) e componentes de servidor sempre que possível
+- Prefira React Server Components (RSC) para conteúdo não interativo
+- Use a diretiva `use client` somente quando necessário
+- Use `async/await` com `fetch()` em componentes de servidor para busca de dados
+- Centralize funções de API em `services/`
+- Use Zod para validação de dados em tempo de execução e segurança de tipos TypeScript
+- Use SWR para busca e cache de dados no lado do cliente
+- Evite exports padrão anônimos—use exports nomeados para clareza
+- Use Tailwind CSS para estilização escopada
+- Use `Head` do `next/head` para definir meta tags por página
+- Aproveite imports dinâmicos (`next/dynamic`) para componentes pesados
+- Use `getStaticProps`, `getServerSideProps` ou `generateMetadata` para SEO e SSR
+- Agrupe constantes, tipos e interfaces em uma pasta `types/` ou `constants/`
+- Prefira composição em vez de herança em componentes React
+- Use `eslint`, `prettier` e `typescript` com modo estrito habilitado
+- Mantenha componentes puros e evite efeitos colaterais no render
+- Use `React.FC<Props>` com tipos de props claros
+- Use `Partial<>`, `Pick<>`, `Omit<>` para moldar tipos
+- Evite prop drilling; use context ou Zustand quando necessário
+- Mantenha o diretório `pages` ou `routes` livre de lógica de negócio
+- Use `.env.local` para variáveis específicas do ambiente (nunca as comite)
+- Prefira imports absolutos (`@/components/...`) para legibilidade
+- Mantenha a lógica do useEffect mínima e arrays de dependência precisos
+- Use error boundaries e tratamento adequado de erros (`try/catch`, UIs de fallback)
+<!-- - Escreva testes unitários (Jest, Vitest) e testes de integração (Playwright, Testing Library) -->
