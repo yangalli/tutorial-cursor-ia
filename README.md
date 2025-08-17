@@ -1,162 +1,196 @@
-# 🚀 Tutorial Cursor IA - Projeto Base
+# 🏛️ Sistema de Patrimônio
 
-Um projeto **Next.js** moderno configurado para experimentação e aprendizado com **Cursor AI**. Este repositório serve como base para desenvolvedores explorarem as capacidades da IA para desenvolvimento web.
+Sistema completo de gestão de patrimônio e inventário desenvolvido com Next.js, React, Tailwind CSS e shadcn/ui.
 
-## 🛠️ Tecnologias
+## ✨ Funcionalidades
 
-Este projeto utiliza as versões mais recentes das principais tecnologias:
+- **Autenticação**: Sistema de login com diferentes níveis de usuário
+- **Gestão de Patrimônio**: Cadastro, edição e controle de bens patrimoniais
+- **Gestão de Inventário**: Controle de itens de consumo e materiais
+- **Categorização**: Sistema flexível de categorias para patrimônio e inventário
+- **Relatórios**: Geração de relatórios mensais e estatísticas
+- **Integração**: Preparado para integração com sistemas externos
+- **Responsivo**: Interface adaptável para desktop e mobile
 
-- **[Next.js 15.4.2](https://nextjs.org/)** - Framework React com App Router
-- **[React 19.1.0](https://react.dev/)** - Biblioteca para interfaces de usuário
-- **[Tailwind CSS v4](https://tailwindcss.com/)** - Framework CSS utility-first
-- **[TypeScript 5](https://www.typescriptlang.org/)** - JavaScript com tipagem estática
-- **[Turbopack](https://turbo.build/)** - Bundler ultrarrápido para desenvolvimento
+## 🚀 Tecnologias
 
-## 🚀 Início Rápido
+- **Frontend**: Next.js 15 + React 19
+- **Styling**: Tailwind CSS v4
+- **UI Components**: shadcn/ui + Radix UI
+- **Database**: PostgreSQL + Prisma ORM
+- **Cloud**: Supabase (banco de dados e autenticação)
+- **TypeScript**: Tipagem estática completa
 
-### Pré-requisitos
+## 📋 Pré-requisitos
 
 - Node.js 18+
-- npm ou yarn ou pnpm
+- npm ou yarn
+- PostgreSQL (local ou Supabase)
+- Conta no Supabase (recomendado)
 
-### Instalação
+## 🛠️ Instalação
 
 1. **Clone o repositório**
 ```bash
-git clone <seu-repositorio>
+git clone <url-do-repositorio>
 cd tutorial-cursor-ia
 ```
 
 2. **Instale as dependências**
 ```bash
 npm install
-# ou
-yarn install
-# ou
-pnpm install
 ```
 
-3. **Execute o projeto**
+3. **Configure as variáveis de ambiente**
+Crie um arquivo `.env.local` na raiz do projeto:
+
+```env
+# Database
+DATABASE_URL="postgresql://username:password@localhost:5432/patrimonio_db"
+
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+```
+
+4. **Configure o banco de dados**
+```bash
+# Gere o cliente Prisma
+npx prisma generate
+
+# Execute as migrações
+npx prisma migrate dev
+
+# (Opcional) Popule com dados de teste
+npx prisma db seed
+```
+
+5. **Execute o projeto**
 ```bash
 npm run dev
-# ou
-yarn dev
-# ou
-pnpm dev
 ```
 
-4. **Abra no navegador**
+O sistema estará disponível em `http://localhost:3000`
 
-   Acesse [http://localhost:3000](http://localhost:3000)
+## 🗄️ Estrutura do Banco de Dados
 
-## 🤖 Experimentando com Cursor AI
+### Entidades Principais
 
-Este projeto foi criado especificamente para experimentação com Cursor AI. Aqui estão algumas sugestões:
+- **Escola**: Instituições educacionais
+- **Usuario**: Usuários do sistema com diferentes níveis de acesso
+- **Patrimonio**: Bens patrimoniais com depreciação
+- **Inventario**: Itens de consumo e materiais
+- **CategoriaPatrimonio**: Categorias para patrimônio com tempo de depreciação
+- **CategoriaInventario**: Categorias para inventário
+- **DocumentoPatrimonio/Inventario**: Documentos associados aos itens
 
-### 💡 Experimentos Sugeridos
+### Relacionamentos
 
-1. **Criação de Componentes**
-   - Peça ao Cursor para criar componentes React reutilizáveis
-   - Experimente diferentes padrões de design (cards, botões, forms)
+- Usuários podem pertencer a múltiplas escolas
+- Cada item (patrimônio/inventário) pertence a uma escola
+- Itens são categorizados por tipo
+- Documentos são vinculados aos itens
 
-2. **Implementação de Features**
-   - Sistema de autenticação
-   - CRUD completo
-   - Dashboard com gráficos
-   - Sistema de comentários
+## 👥 Tipos de Usuário
 
-3. **Estilização Avançada**
-   - Temas dark/light
-   - Animações com Tailwind
-   - Layouts responsivos complexos
+- **admin**: Acesso total ao sistema
+- **secretario**: Gestão de patrimônio e relatórios
+- **chefe_de_filial**: Gestão da escola específica
+- **usuario**: Visualização e operações básicas
 
-4. **Integração com APIs**
-   - Consumo de APIs REST
-   - Implementação de GraphQL
-   - Server Actions do Next.js
+## 📱 Interface
 
-### 🎯 Comandos Úteis para o Cursor
+### Dashboard
+- Visão geral com estatísticas
+- Atividades recentes
+- Ações rápidas
+- Resumo por escola
 
-Experimente estes prompts com o Cursor AI:
+### Categorias
+- Gestão de categorias de patrimônio e inventário
+- Tempo de depreciação para patrimônio
+- Interface com abas organizadas
 
+### Navegação
+- Sidebar responsiva
+- Menu mobile otimizado
+- Breadcrumbs e navegação intuitiva
+
+## 🔧 Desenvolvimento
+
+### Estrutura de Pastas
 ```
-"Crie um componente de card responsivo com Tailwind"
-"Implemente um sistema de navegação com menu hambúrguer"
-"Adicione um formulário de contato com validação"
-"Crie uma página de dashboard com gráficos"
-"Implemente autenticação com NextAuth.js"
+src/
+├── app/                    # App Router do Next.js
+│   ├── (auth)/            # Rotas de autenticação
+│   ├── (dashboard)/       # Rotas do dashboard
+│   └── layout.tsx         # Layout principal
+├── components/             # Componentes React
+│   └── ui/                # Componentes shadcn/ui
+├── lib/                    # Utilitários e configurações
+├── types/                  # Definições TypeScript
+└── hooks/                  # Hooks customizados
 ```
 
-## 📁 Estrutura do Projeto
+### Componentes UI
+- **Button**: Botões com variantes e tamanhos
+- **Card**: Cards para exibição de conteúdo
+- **Dialog**: Modais e diálogos
+- **Input**: Campos de entrada
+- **Select**: Seletores dropdown
+- **Tabs**: Abas organizacionais
+- **Toast**: Notificações do sistema
 
+### Estilização
+- **Tailwind CSS v4**: Utility-first CSS
+- **Design System**: Variáveis CSS consistentes
+- **Responsivo**: Mobile-first approach
+- **Tema**: Suporte a modo claro/escuro
+
+## 📊 Funcionalidades Futuras
+
+- [ ] CRUD completo de Patrimônio
+- [ ] CRUD completo de Inventário
+- [ ] Sistema de upload de documentos
+- [ ] Relatórios avançados
+- [ ] Integração com sistema externo
+- [ ] Dashboard analítico
+- [ ] Notificações em tempo real
+- [ ] API REST completa
+
+## 🚀 Deploy
+
+### Vercel (Recomendado)
+```bash
+npm run build
+vercel --prod
 ```
-tutorial-cursor-ia/
-├── public/                 # Arquivos estáticos
-│   ├── *.svg              # Ícones e imagens
-├── src/
-│   ├── app/               # App Router (Next.js 13+)
-│   │   ├── globals.css    # Estilos globais
-│   │   ├── layout.tsx     # Layout raiz
-│   │   └── page.tsx       # Página inicial
-│   └── services/          # Serviços e utilitários
-├── eslint.config.mjs      # Configuração ESLint
-├── next.config.ts         # Configuração Next.js
-├── package.json           # Dependências e scripts
-├── postcss.config.mjs     # Configuração PostCSS
-└── tsconfig.json          # Configuração TypeScript
-```
 
-## 📦 Scripts Disponíveis
+### Outras Plataformas
+- Netlify
+- Railway
+- Heroku
+- AWS/GCP
 
-- `npm run dev` - Executa em modo desenvolvimento (com Turbopack)
-- `npm run build` - Cria build de produção
-- `npm run start` - Executa build de produção
-- `npm run lint` - Executa verificação de linting
+## 🤝 Contribuição
 
-## 🎨 Funcionalidades Pré-configuradas
+1. Fork o projeto
+2. Crie uma branch para sua feature
+3. Commit suas mudanças
+4. Push para a branch
+5. Abra um Pull Request
 
-### ✅ Já Configurado
+## 📄 Licença
 
-- **App Router** do Next.js 15
-- **Tailwind CSS v4** com configuração otimizada
-- **TypeScript** com tipos atualizados
-- **ESLint** para qualidade de código
-- **Turbopack** para desenvolvimento mais rápido
-- **Fonts otimizadas** (Geist Sans e Geist Mono)
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
 
-### 🔄 Pronto para Adicionar
+## 📞 Suporte
 
-- Autenticação (NextAuth.js, Clerk, etc.)
-- Banco de dados (Prisma, Drizzle)
-- State Management (Zustand, Redux Toolkit)
-- Testes (Jest, Testing Library, Playwright)
-- Deployment (Vercel, Netlify)
-
-## 🚀 Próximos Passos
-
-1. **Personalize o projeto** para suas necessidades
-2. **Experimente** diferentes prompts com o Cursor AI
-3. **Implemente** funcionalidades progressivamente
-4. **Compartilhe** suas descobertas com a comunidade
-
-## 🤝 Contribuindo
-
-Sinta-se à vontade para:
-
-- Fazer fork do projeto
-- Criar branches para experimentos
-- Compartilhar melhorias e descobertas
-- Reportar issues ou sugestões
-
-## 📚 Recursos Úteis
-
-- [Documentação Next.js](https://nextjs.org/docs)
-- [Documentação Tailwind CSS](https://tailwindcss.com/docs)
-- [Cursor AI Documentation](https://cursor.sh/docs)
-- [React Documentation](https://react.dev/)
+Para dúvidas ou suporte:
+- Abra uma issue no GitHub
+- Entre em contato com a equipe de desenvolvimento
 
 ---
 
-**Happy Coding!** 🎉
-
-Divirta-se experimentando com o Cursor AI e explorando as possibilidades do desenvolvimento moderno web!
+**Desenvolvido com ❤️ usando Next.js, React e Tailwind CSS**

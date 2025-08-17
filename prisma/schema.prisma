@@ -1,0 +1,195 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Tipos de usuário
+enum TipoUsuario {
+  admin
+  secretario
+  chefe_de_filial
+  usuario
+}
+
+// Status dos itens
+enum StatusItem {
+  ativo
+  inativo
+  manutencao
+  obsoleto
+  vendido
+}
+
+// Modelo de Escola
+model Escola {
+  id              Int      @id @default(autoincrement())
+  nome            String
+  siglaMercurio   String   @unique
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relacionamentos
+  usuarios        EscolaUsuario[]
+  patrimonios     Patrimonio[]
+  inventarios     Inventario[]
+
+  @@map("escolas")
+}
+
+// Modelo de Usuário
+model Usuario {
+  id           Int         @id @default(autoincrement())
+  codMercurio  Int         @unique
+  nome         String
+  email        String      @unique
+  senha        String
+  tipoUsuario  TipoUsuario @default(usuario)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  // Relacionamentos
+  escolas      EscolaUsuario[]
+
+  @@map("usuarios")
+}
+
+// Tabela de junção para relacionamento many-to-many entre Escola e Usuário
+model EscolaUsuario {
+  id           Int      @id @default(autoincrement())
+  escolaId     Int
+  usuarioId    Int
+  nivelAcesso  Int      @default(1) // 1-5, onde 5 é o nível mais alto
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relacionamentos
+  escola       Escola   @relation(fields: [escolaId], references: [id], onDelete: Cascade)
+  usuario      Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@unique([escolaId, usuarioId])
+  @@map("escolas_usuarios")
+}
+
+// Categoria de Patrimônio
+model CategoriaPatrimonio {
+  id                Int         @id @default(autoincrement())
+  nome              String      @unique
+  tempoDepreciacao  Int         // Em meses
+  requisitos        Json?       // Campo JSON para requisitos específicos
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  // Relacionamentos
+  patrimonios       Patrimonio[]
+
+  @@map("categorias_patrimonio")
+}
+
+// Categoria de Inventário
+model CategoriaInventario {
+  id          Int      @id @default(autoincrement())
+  nome        String   @unique
+  requisitos  Json?    // Campo JSON para requisitos específicos
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relacionamentos
+  inventarios Inventario[]
+
+  @@map("categorias_inventario")
+}
+
+// Modelo de Patrimônio
+model Patrimonio {
+  id                      Int         @id @default(autoincrement())
+  escolaId                Int
+  categoriaPatrimonioId   Int
+  nome                    String
+  descricao               String?
+  dataAquisicao           DateTime
+  valorAquisicaoReais     Decimal     @db.Decimal(10, 2)
+  valorAquisicaoDolares  Decimal?    @db.Decimal(10, 2)
+  valorAquisicaoEuros    Decimal?    @db.Decimal(10, 2)
+  status                  StatusItem  @default(ativo)
+  caracteristicas         Json?       // Campo JSON para características específicas
+  historico               Json?       // Campo JSON para histórico de mudanças
+  valorAtual              Decimal?    @db.Decimal(10, 2)
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
+
+  // Relacionamentos
+  escola                  Escola                  @relation(fields: [escolaId], references: [id], onDelete: Cascade)
+  categoriaPatrimonio     CategoriaPatrimonio     @relation(fields: [categoriaPatrimonioId], references: [id])
+  documentos              DocumentoPatrimonio[]
+
+  @@map("patrimonios")
+}
+
+// Modelo de Inventário
+model Inventario {
+  id                      Int         @id @default(autoincrement())
+  escolaId                Int
+  categoriaInventarioId   Int
+  nome                    String
+  descricao               String?
+  dataAquisicao           DateTime
+  valorAquisicaoReais     Decimal     @db.Decimal(10, 2)
+  valorAquisicaoDolares  Decimal?    @db.Decimal(10, 2)
+  valorAquisicaoEuros    Decimal?    @db.Decimal(10, 2)
+  status                  StatusItem  @default(ativo)
+  caracteristicas         Json?       // Campo JSON para características específicas
+  historico               Json?       // Campo JSON para histórico de mudanças
+  valorAtual              Decimal?    @db.Decimal(10, 2)
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
+
+  // Relacionamentos
+  escola                  Escola                  @relation(fields: [escolaId], references: [id], onDelete: Cascade)
+  categoriaInventario     CategoriaInventario     @relation(fields: [categoriaInventarioId], references: [id])
+  documentos              DocumentoInventario[]
+
+  @@map("inventarios")
+}
+
+// Documentos de Patrimônio
+model DocumentoPatrimonio {
+  id            String      @id @default(cuid())
+  patrimonioId  Int
+  nomeArquivo   String
+  descricao     String?
+  urlArquivo    String      // URL ou caminho do arquivo
+  tipoArquivo  String?     // PDF, imagem, etc.
+  tamanho       Int?        // Tamanho em bytes
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  // Relacionamentos
+  patrimonio    Patrimonio  @relation(fields: [patrimonioId], references: [id], onDelete: Cascade)
+
+  @@map("documentos_patrimonio")
+}
+
+// Documentos de Inventário
+model DocumentoInventario {
+  id              String      @id @default(cuid())
+  inventarioId    Int
+  nomeArquivo     String
+  descricao       String?
+  urlArquivo      String      // URL ou caminho do arquivo
+  tipoArquivo    String?     // PDF, imagem, etc.
+  tamanho         Int?        // Tamanho em bytes
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // Relacionamentos
+  inventario      Inventario  @relation(fields: [inventarioId], references: [id], onDelete: Cascade)
+
+  @@map("documentos_inventario")
+}
