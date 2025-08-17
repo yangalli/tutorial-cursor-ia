@@ -1,162 +1,191 @@
-# 🚀 Tutorial Cursor IA - Projeto Base
+# 📝 Todo App - Gerenciador de Tarefas Moderno
 
-Um projeto **Next.js** moderno configurado para experimentação e aprendizado com **Cursor AI**. Este repositório serve como base para desenvolvedores explorarem as capacidades da IA para desenvolvimento web.
+Um aplicativo completo de gerenciamento de tarefas construído com **Next.js**, **React**, **TypeScript** e **Tailwind CSS**.
 
-## 🛠️ Tecnologias
+## ✨ Funcionalidades
 
-Este projeto utiliza as versões mais recentes das principais tecnologias:
+### 🏠 Dashboard Inteligente
+- **Estatísticas em tempo real**: Total, pendentes, concluídas e em atraso
+- **Todos prioritários**: Destaque para tarefas de alta prioridade
+- **Todos recentes**: Visualização das tarefas mais recentes
+- **Alertas de atraso**: Identificação visual de tarefas vencidas
 
-- **[Next.js 15.4.2](https://nextjs.org/)** - Framework React com App Router
-- **[React 19.1.0](https://react.dev/)** - Biblioteca para interfaces de usuário
-- **[Tailwind CSS v4](https://tailwindcss.com/)** - Framework CSS utility-first
-- **[TypeScript 5](https://www.typescriptlang.org/)** - JavaScript com tipagem estática
-- **[Turbopack](https://turbo.build/)** - Bundler ultrarrápido para desenvolvimento
+### 📋 Gerenciamento Completo de Tarefas
+- **Criar todos**: Formulário completo com título, descrição, prioridade e data de vencimento
+- **Marcar como concluído**: Sistema de checkbox para completar tarefas
+- **Deletar todos**: Remoção rápida de tarefas desnecessárias
+- **Sistema de prioridades**: Alta, média e baixa com codificação por cores
 
-## 🚀 Início Rápido
+### 🔍 Busca e Filtros Avançados
+- **Busca por texto**: Pesquisar por título ou descrição
+- **Filtros por status**: Todos, pendentes ou concluídos
+- **Ordenação flexível**: Por data (mais novo/antigo), prioridade ou data de vencimento
+- **Contadores dinâmicos**: Exibição em tempo real das quantidades
+
+### 🎨 Design e UX
+- **Design responsivo**: Funciona perfeitamente em desktop e mobile
+- **Dark mode**: Suporte nativo ao modo escuro
+- **Animações suaves**: Transições e feedback visual
+- **Estados vazios**: Orientações claras quando não há dados
+- **Acessibilidade**: Suporte a teclado e screen readers
+
+### 💾 Persistência de Dados
+- **LocalStorage**: Dados salvos automaticamente no navegador
+- **Sincronização automática**: Estado sempre atualizado
+- **Recuperação de dados**: Carregamento automático na inicialização
+
+## 🚀 Como Executar
 
 ### Pré-requisitos
-
 - Node.js 18+
-- npm ou yarn ou pnpm
+- npm ou yarn
 
 ### Instalação
 
-1. **Clone o repositório**
 ```bash
-git clone <seu-repositorio>
+# Clone o repositório
+git clone <url-do-repositorio>
+
+# Entre na pasta do projeto
 cd tutorial-cursor-ia
-```
 
-2. **Instale as dependências**
-```bash
+# Instale as dependências
 npm install
-# ou
-yarn install
-# ou
-pnpm install
-```
 
-3. **Execute o projeto**
-```bash
+# Execute o servidor de desenvolvimento
 npm run dev
-# ou
-yarn dev
-# ou
-pnpm dev
 ```
 
-4. **Abra no navegador**
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador.
 
-   Acesse [http://localhost:3000](http://localhost:3000)
+## 🏗️ Arquitetura do Projeto
 
-## 🤖 Experimentando com Cursor AI
-
-Este projeto foi criado especificamente para experimentação com Cursor AI. Aqui estão algumas sugestões:
-
-### 💡 Experimentos Sugeridos
-
-1. **Criação de Componentes**
-   - Peça ao Cursor para criar componentes React reutilizáveis
-   - Experimente diferentes padrões de design (cards, botões, forms)
-
-2. **Implementação de Features**
-   - Sistema de autenticação
-   - CRUD completo
-   - Dashboard com gráficos
-   - Sistema de comentários
-
-3. **Estilização Avançada**
-   - Temas dark/light
-   - Animações com Tailwind
-   - Layouts responsivos complexos
-
-4. **Integração com APIs**
-   - Consumo de APIs REST
-   - Implementação de GraphQL
-   - Server Actions do Next.js
-
-### 🎯 Comandos Úteis para o Cursor
-
-Experimente estes prompts com o Cursor AI:
+### Estrutura de Pastas
 
 ```
-"Crie um componente de card responsivo com Tailwind"
-"Implemente um sistema de navegação com menu hambúrguer"
-"Adicione um formulário de contato com validação"
-"Crie uma página de dashboard com gráficos"
-"Implemente autenticação com NextAuth.js"
+src/
+├── app/                    # Next.js App Router
+│   ├── create/            # Página de criação de todos
+│   ├── todos/             # Página de listagem de todos
+│   ├── layout.tsx         # Layout principal
+│   └── page.tsx           # Dashboard (página inicial)
+├── components/            # Componentes reutilizáveis
+│   ├── Navigation.tsx     # Barra de navegação
+│   ├── TodoCard.tsx       # Card de todo individual
+│   └── TodoForm.tsx       # Formulário de criação
+├── contexts/              # Context API para estado global
+│   └── TodoContext.tsx    # Estado e operações dos todos
+├── types/                 # Definições TypeScript
+│   └── todo.ts           # Interfaces e tipos
+└── services/             # Serviços (futuras integrações)
 ```
 
-## 📁 Estrutura do Projeto
+### Tecnologias Utilizadas
 
-```
-tutorial-cursor-ia/
-├── public/                 # Arquivos estáticos
-│   ├── *.svg              # Ícones e imagens
-├── src/
-│   ├── app/               # App Router (Next.js 13+)
-│   │   ├── globals.css    # Estilos globais
-│   │   ├── layout.tsx     # Layout raiz
-│   │   └── page.tsx       # Página inicial
-│   └── services/          # Serviços e utilitários
-├── eslint.config.mjs      # Configuração ESLint
-├── next.config.ts         # Configuração Next.js
-├── package.json           # Dependências e scripts
-├── postcss.config.mjs     # Configuração PostCSS
-└── tsconfig.json          # Configuração TypeScript
-```
+- **Next.js 15**: Framework React com App Router
+- **React 18**: Biblioteca para interfaces de usuário
+- **TypeScript**: Tipagem estática para JavaScript
+- **Tailwind CSS**: Framework de CSS utility-first
+- **Context API**: Gerenciamento de estado global
 
-## 📦 Scripts Disponíveis
+## 📱 Páginas e Funcionalidades
 
-- `npm run dev` - Executa em modo desenvolvimento (com Turbopack)
-- `npm run build` - Cria build de produção
-- `npm run start` - Executa build de produção
-- `npm run lint` - Executa verificação de linting
+### 🏠 Home (`/`)
+Dashboard principal com:
+- Estatísticas rápidas (total, pendentes, concluídas, em atraso)
+- Seção de todos de alta prioridade
+- Todos recentes criados
+- Alertas para todos em atraso
+- Botões de ação rápida
 
-## 🎨 Funcionalidades Pré-configuradas
+### ➕ Criar Todo (`/create`)
+Formulário completo para criação com:
+- Campo obrigatório de título
+- Descrição opcional
+- Seleção de prioridade (alta, média, baixa)
+- Data de vencimento opcional
+- Validação em tempo real
+- Dicas de boas práticas
 
-### ✅ Já Configurado
+### 📋 Todos (`/todos`)
+Listagem completa com:
+- Grid responsivo de cards
+- Busca por texto em tempo real
+- Filtros por status (todos, pendentes, concluídos)
+- Ordenação por data, prioridade ou vencimento
+- Estatísticas resumidas
+- Estados vazios informativos
 
-- **App Router** do Next.js 15
-- **Tailwind CSS v4** com configuração otimizada
-- **TypeScript** com tipos atualizados
-- **ESLint** para qualidade de código
-- **Turbopack** para desenvolvimento mais rápido
-- **Fonts otimizadas** (Geist Sans e Geist Mono)
+## 🎯 Componentes Principais
 
-### 🔄 Pronto para Adicionar
+### `TodoCard`
+- Exibição visual rica de cada todo
+- Cores baseadas na prioridade
+- Indicadores de vencimento
+- Ações de toggle e deletar
+- Suporte a dark mode
 
-- Autenticação (NextAuth.js, Clerk, etc.)
-- Banco de dados (Prisma, Drizzle)
-- State Management (Zustand, Redux Toolkit)
-- Testes (Jest, Testing Library, Playwright)
-- Deployment (Vercel, Netlify)
+### `TodoForm`
+- Validação completa do formulário
+- Feedback de erros em tempo real
+- Reset automático após envio
+- Campos opcionais e obrigatórios
 
-## 🚀 Próximos Passos
+### `Navigation`
+- Navegação responsiva
+- Badges com contadores
+- Indicador de página ativa
+- Menu mobile
 
-1. **Personalize o projeto** para suas necessidades
-2. **Experimente** diferentes prompts com o Cursor AI
-3. **Implemente** funcionalidades progressivamente
-4. **Compartilhe** suas descobertas com a comunidade
+## 🔧 Funcionalidades Técnicas
 
-## 🤝 Contribuindo
+### Context API
+O `TodoContext` gerencia todo o estado da aplicação:
+- Lista de todos
+- Operações CRUD (Create, Read, Update, Delete)
+- Persistência automática em localStorage
+- Hooks customizados para acesso aos dados
 
-Sinta-se à vontade para:
+### TypeScript
+Tipagem completa para:
+- Interfaces de Todo
+- Props de componentes
+- Estados e contextos
+- Eventos e formulários
 
-- Fazer fork do projeto
-- Criar branches para experimentos
-- Compartilhar melhorias e descobertas
-- Reportar issues ou sugestões
+### Responsividade
+- Design mobile-first
+- Breakpoints personalizados
+- Grid adaptável
+- Menu mobile funcional
 
-## 📚 Recursos Úteis
+## 🎨 Design System
 
-- [Documentação Next.js](https://nextjs.org/docs)
-- [Documentação Tailwind CSS](https://tailwindcss.com/docs)
-- [Cursor AI Documentation](https://cursor.sh/docs)
-- [React Documentation](https://react.dev/)
+### Cores e Prioridades
+- **Alta prioridade**: Vermelho (bg-red-50, border-red-500)
+- **Média prioridade**: Amarelo (bg-yellow-50, border-yellow-500)
+- **Baixa prioridade**: Verde (bg-green-50, border-green-500)
+
+### Estados Visuais
+- **Concluído**: Opacidade reduzida, texto riscado
+- **Em atraso**: Anel vermelho, texto destacado
+- **Hover**: Sombra elevada, transições suaves
+
+## 🚀 Melhorias Futuras
+
+- [ ] Backend com API REST
+- [ ] Autenticação de usuários
+- [ ] Colaboração em tempo real
+- [ ] Notificações push
+- [ ] Categorias personalizadas
+- [ ] Subtarefas
+- [ ] Exportação de dados
+- [ ] Temas personalizáveis
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ---
 
-**Happy Coding!** 🎉
-
-Divirta-se experimentando com o Cursor AI e explorando as possibilidades do desenvolvimento moderno web!
+Desenvolvido com ❤️ usando as melhores práticas de React e Next.js
