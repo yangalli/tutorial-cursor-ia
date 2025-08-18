@@ -1,162 +1,325 @@
-# 🚀 Tutorial Cursor IA - Projeto Base
+# 🏛️ Backend - Sistema de Patrimônio Nova Acrópole
 
-Um projeto **Next.js** moderno configurado para experimentação e aprendizado com **Cursor AI**. Este repositório serve como base para desenvolvedores explorarem as capacidades da IA para desenvolvimento web.
+Backend em NestJS para o sistema de gestão de patrimônio e inventário da Nova Acrópole.
 
-## 🛠️ Tecnologias
+## 🚀 Tecnologias
 
-Este projeto utiliza as versões mais recentes das principais tecnologias:
+- **Framework**: NestJS 10.x
+- **Banco de Dados**: PostgreSQL 14+
+- **ORM**: TypeORM
+- **Validação**: class-validator + class-transformer
+- **Documentação**: Swagger/OpenAPI
+- **Autenticação**: JWT (preparado para implementação)
+- **CORS**: Configurado para frontend Next.js
 
-- **[Next.js 15.4.2](https://nextjs.org/)** - Framework React com App Router
-- **[React 19.1.0](https://react.dev/)** - Biblioteca para interfaces de usuário
-- **[Tailwind CSS v4](https://tailwindcss.com/)** - Framework CSS utility-first
-- **[TypeScript 5](https://www.typescriptlang.org/)** - JavaScript com tipagem estática
-- **[Turbopack](https://turbo.build/)** - Bundler ultrarrápido para desenvolvimento
-
-## 🚀 Início Rápido
-
-### Pré-requisitos
+## 📋 Pré-requisitos
 
 - Node.js 18+
-- npm ou yarn ou pnpm
+- PostgreSQL 14+
+- npm ou yarn
 
-### Instalação
+## 🛠️ Instalação
 
-1. **Clone o repositório**
+1. **Clone o repositório e navegue para o backend:**
 ```bash
-git clone <seu-repositorio>
-cd tutorial-cursor-ia
+cd backend-patrimonio
 ```
 
-2. **Instale as dependências**
+2. **Instale as dependências:**
 ```bash
 npm install
-# ou
-yarn install
-# ou
-pnpm install
 ```
 
-3. **Execute o projeto**
+3. **Configure as variáveis de ambiente:**
 ```bash
-npm run dev
-# ou
-yarn dev
-# ou
-pnpm dev
+cp env.example .env
+# Edite o arquivo .env com suas configurações
 ```
 
-4. **Abra no navegador**
-
-   Acesse [http://localhost:3000](http://localhost:3000)
-
-## 🤖 Experimentando com Cursor AI
-
-Este projeto foi criado especificamente para experimentação com Cursor AI. Aqui estão algumas sugestões:
-
-### 💡 Experimentos Sugeridos
-
-1. **Criação de Componentes**
-   - Peça ao Cursor para criar componentes React reutilizáveis
-   - Experimente diferentes padrões de design (cards, botões, forms)
-
-2. **Implementação de Features**
-   - Sistema de autenticação
-   - CRUD completo
-   - Dashboard com gráficos
-   - Sistema de comentários
-
-3. **Estilização Avançada**
-   - Temas dark/light
-   - Animações com Tailwind
-   - Layouts responsivos complexos
-
-4. **Integração com APIs**
-   - Consumo de APIs REST
-   - Implementação de GraphQL
-   - Server Actions do Next.js
-
-### 🎯 Comandos Úteis para o Cursor
-
-Experimente estes prompts com o Cursor AI:
-
-```
-"Crie um componente de card responsivo com Tailwind"
-"Implemente um sistema de navegação com menu hambúrguer"
-"Adicione um formulário de contato com validação"
-"Crie uma página de dashboard com gráficos"
-"Implemente autenticação com NextAuth.js"
+4. **Configure o banco de dados:**
+```bash
+# Execute o script SQL para criar as tabelas
+psql -U seu_usuario -d seu_banco -f database/schema.sql
 ```
 
-## 📁 Estrutura do Projeto
+5. **Execute a aplicação:**
+```bash
+# Desenvolvimento
+npm run start:dev
 
-```
-tutorial-cursor-ia/
-├── public/                 # Arquivos estáticos
-│   ├── *.svg              # Ícones e imagens
-├── src/
-│   ├── app/               # App Router (Next.js 13+)
-│   │   ├── globals.css    # Estilos globais
-│   │   ├── layout.tsx     # Layout raiz
-│   │   └── page.tsx       # Página inicial
-│   └── services/          # Serviços e utilitários
-├── eslint.config.mjs      # Configuração ESLint
-├── next.config.ts         # Configuração Next.js
-├── package.json           # Dependências e scripts
-├── postcss.config.mjs     # Configuração PostCSS
-└── tsconfig.json          # Configuração TypeScript
+# Produção
+npm run build
+npm run start:prod
 ```
 
-## 📦 Scripts Disponíveis
+## ⚙️ Configuração
 
-- `npm run dev` - Executa em modo desenvolvimento (com Turbopack)
-- `npm run build` - Cria build de produção
-- `npm run start` - Executa build de produção
-- `npm run lint` - Executa verificação de linting
+### Variáveis de Ambiente
 
-## 🎨 Funcionalidades Pré-configuradas
+```env
+# Banco de Dados
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=sua_senha
+DB_DATABASE=patrimonio
 
-### ✅ Já Configurado
+# Aplicação
+NODE_ENV=development
+PORT=3001
+FRONTEND_URL=http://localhost:3000
 
-- **App Router** do Next.js 15
-- **Tailwind CSS v4** com configuração otimizada
-- **TypeScript** com tipos atualizados
-- **ESLint** para qualidade de código
-- **Turbopack** para desenvolvimento mais rápido
-- **Fonts otimizadas** (Geist Sans e Geist Mono)
+# Segurança
+JWT_SECRET=sua_chave_jwt_secreta
+JWT_EXPIRES_IN=24h
+```
 
-### 🔄 Pronto para Adicionar
+### Banco de Dados
 
-- Autenticação (NextAuth.js, Clerk, etc.)
-- Banco de dados (Prisma, Drizzle)
-- State Management (Zustand, Redux Toolkit)
-- Testes (Jest, Testing Library, Playwright)
-- Deployment (Vercel, Netlify)
+O sistema utiliza PostgreSQL com as seguintes características:
 
-## 🚀 Próximos Passos
+- **UUIDs** para todas as chaves primárias
+- **JSONB** para campos flexíveis (características, histórico)
+- **Triggers** para atualização automática de timestamps
+- **Índices** para otimização de consultas
+- **Constraints** para integridade referencial
 
-1. **Personalize o projeto** para suas necessidades
-2. **Experimente** diferentes prompts com o Cursor AI
-3. **Implemente** funcionalidades progressivamente
-4. **Compartilhe** suas descobertas com a comunidade
+## 🏗️ Estrutura do Projeto
 
-## 🤝 Contribuindo
+```
+src/
+├── entities/           # Entidades TypeORM
+│   ├── escola.entity.ts
+│   ├── usuario.entity.ts
+│   ├── escola-usuario.entity.ts
+│   ├── categoria-patrimonio.entity.ts
+│   ├── categoria-inventario.entity.ts
+│   ├── patrimonio.entity.ts
+│   ├── documento-patrimonio.entity.ts
+│   ├── inventario.entity.ts
+│   └── documento-inventario.entity.ts
+├── dto/               # Data Transfer Objects
+│   ├── create-escola.dto.ts
+│   ├── update-escola.dto.ts
+│   ├── create-usuario.dto.ts
+│   └── create-patrimonio.dto.ts
+├── services/          # Lógica de negócio
+│   └── escola.service.ts
+├── controllers/       # Controladores REST
+│   └── escola.controller.ts
+├── app.module.ts      # Módulo principal
+└── main.ts           # Configuração da aplicação
+```
 
-Sinta-se à vontade para:
+## 📊 Entidades do Sistema
 
-- Fazer fork do projeto
-- Criar branches para experimentos
-- Compartilhar melhorias e descobertas
-- Reportar issues ou sugestões
+### 🏫 Escola
+- **id**: UUID único
+- **nome**: Nome da escola
+- **siglaMercurio**: Sigla no sistema externo (único)
+- **endereco**: Endereço completo
+- **telefone**: Telefone de contato
+- **email**: Email institucional
+- **diretor**: Nome do diretor
 
-## 📚 Recursos Úteis
+### 👤 Usuário
+- **id**: UUID único
+- **codMercurio**: Código no sistema externo (único)
+- **nome**: Nome completo
+- **email**: Email (único)
+- **password**: Senha criptografada
+- **role**: Nível de acesso (admin, secretario, chefe_de_filial, usuario)
+- **ativo**: Status ativo/inativo
 
-- [Documentação Next.js](https://nextjs.org/docs)
-- [Documentação Tailwind CSS](https://tailwindcss.com/docs)
-- [Cursor AI Documentation](https://cursor.sh/docs)
-- [React Documentation](https://react.dev/)
+### 🔗 Escola-Usuário
+- **escolaId**: Referência à escola
+- **usuarioId**: Referência ao usuário
+- **nivelAcesso**: Nível específico na escola
+- **createdAt**: Data de criação do vínculo
+
+### 📦 Categorias
+- **Patrimônio**: Com tempo de depreciação
+- **Inventário**: Para itens de consumo
+
+### 🏷️ Patrimônio/Inventário
+- **escolaId**: Escola proprietária
+- **categoriaId**: Categoria do item
+- **nome**: Nome do item
+- **descricao**: Descrição detalhada
+- **dataAquisicao**: Data de aquisição
+- **valores**: Em reais, dólares e euros
+- **status**: ativo, inativo, manutencao, depreciado, vendido
+- **caracteristicas**: JSONB para dados flexíveis
+- **historico**: JSONB para histórico de alterações
+- **valorAtual**: Valor atual do item
+
+### 📄 Documentos
+- **patrimonioId/inventarioId**: Referência ao item
+- **descricao**: Descrição do documento
+- **nomeArquivo**: Nome original do arquivo
+- **urlArquivo**: URL para acesso
+- **tipoArquivo**: Tipo MIME
+- **tamanhoArquivo**: Tamanho em bytes
+
+## 🚀 Endpoints Disponíveis
+
+### Escolas (`/api/v1/escolas`)
+
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| `POST` | `/` | Criar nova escola |
+| `GET` | `/` | Listar todas as escolas |
+| `GET` | `/:id` | Buscar escola por ID |
+| `GET` | `/sigla/:siglaMercurio` | Buscar por sigla Mercurio |
+| `GET` | `/:id/estatisticas` | Estatísticas da escola |
+| `PATCH` | `/:id` | Atualizar escola |
+| `DELETE` | `/:id` | Excluir escola |
+
+### Exemplos de Uso
+
+#### Criar Escola
+```bash
+curl -X POST http://localhost:3001/api/v1/escolas \
+  -H "Content-Type: application/json" \
+  -d '{
+    "nome": "Nova Acrópole - São Paulo",
+    "siglaMercurio": "NA-SP",
+    "endereco": "Rua Exemplo, 123",
+    "telefone": "(11) 1234-5678",
+    "email": "sp@novaacropole.com",
+    "diretor": "João Silva"
+  }'
+```
+
+#### Listar Escolas
+```bash
+curl http://localhost:3001/api/v1/escolas
+```
+
+#### Estatísticas da Escola
+```bash
+curl http://localhost:3001/api/v1/escolas/{id}/estatisticas
+```
+
+## 📚 Documentação da API
+
+A documentação Swagger está disponível em:
+```
+http://localhost:3001/api
+```
+
+## 🔒 Segurança
+
+### Autenticação (Preparado para implementação)
+- JWT para autenticação
+- Roles baseados em usuário
+- Middleware de autorização
+
+### Validação
+- Validação automática de DTOs
+- Sanitização de dados
+- Tratamento de erros padronizado
+
+### CORS
+- Configurado para frontend Next.js
+- Credenciais habilitadas
+- Origem configurável
+
+## 🧪 Testes
+
+```bash
+# Testes unitários
+npm run test
+
+# Testes e2e
+npm run test:e2e
+
+# Cobertura de testes
+npm run test:cov
+```
+
+## 🚀 Deploy
+
+### Desenvolvimento
+```bash
+npm run start:dev
+```
+
+### Produção
+```bash
+npm run build
+npm run start:prod
+```
+
+### Docker (Preparado para implementação)
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY dist ./dist
+EXPOSE 3001
+CMD ["npm", "run", "start:prod"]
+```
+
+## 📈 Próximos Passos
+
+### Implementações Imediatas
+1. **Autenticação JWT**
+   - Login/logout
+   - Middleware de autorização
+   - Refresh tokens
+
+2. **Serviços Completos**
+   - Usuário service
+   - Patrimônio service
+   - Inventário service
+   - Categorias service
+
+3. **Controllers Completos**
+   - Todos os endpoints CRUD
+   - Filtros e paginação
+   - Relatórios
+
+### Implementações Futuras
+1. **Upload de Arquivos**
+   - Integração com Supabase Storage
+   - Validação de tipos
+   - Compressão automática
+
+2. **Relatórios Avançados**
+   - Exportação PDF/Excel
+   - Gráficos e dashboards
+   - Agendamento de relatórios
+
+3. **Notificações**
+   - Sistema de alertas
+   - Emails automáticos
+   - Webhooks
+
+4. **Integração Externa**
+   - Sincronização com sistema Mercurio
+   - APIs de terceiros
+   - Webhooks de entrada
+
+## 🤝 Contribuição
+
+1. Fork o projeto
+2. Crie uma branch para sua feature
+3. Commit suas mudanças
+4. Push para a branch
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto é privado para uso da Nova Acrópole.
+
+## 🆘 Suporte
+
+Para dúvidas ou problemas:
+- Abra uma issue no repositório
+- Entre em contato com a equipe de desenvolvimento
 
 ---
 
-**Happy Coding!** 🎉
-
-Divirta-se experimentando com o Cursor AI e explorando as possibilidades do desenvolvimento moderno web!
+**Desenvolvido com ❤️ para a Nova Acrópole**
