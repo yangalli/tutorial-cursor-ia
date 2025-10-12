@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter, usePathname } from "next/navigation"
-import { Button } from "@/app/components/ui/button"
+import { Button } from "@/components/ui/button"
 import {
   Building2,
   Package,
@@ -13,7 +13,7 @@ import {
   Tag,
   FileText
 } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/utils"
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: Home },

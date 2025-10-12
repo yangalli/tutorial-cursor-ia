@@ -1,14 +1,14 @@
 "use client"
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
-import { Button } from "@/app/components/ui/button"
-import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/app/components/ui/dialog"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs"
-import { useToast } from "@/app/hooks/use-toast"
+import { useState, useTransition } from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
 import {
   Plus,
@@ -21,14 +21,16 @@ import {
   Eye,
   Package
 } from "lucide-react"
-import { formatCurrency, formatDate } from "@/lib/utils"
-import { StatusItem } from "@/app/types"
+import { formatCurrency, formatDate } from "@/lib/utils/utils"
+import { StatusItem } from "@prisma/client"
 import { PatrimonioForm } from "./patrimonio-form"
+import { deletePatrimonio } from "@/lib/actions/patrimonio"
+import type { PatrimonioWithRelations } from "@/types/patrimonio"
 
 interface PatrimonioListClientProps {
-  initialPatrimonios: any[]
-  categorias: any[]
-  escolas: any[]
+  initialPatrimonios: PatrimonioWithRelations[]
+  categorias: Array<{ id: number; nome: string }>
+  escolas: Array<{ id: number; nome: string }>
 }
 
 export function PatrimonioListClient({
@@ -38,10 +40,11 @@ export function PatrimonioListClient({
 }: PatrimonioListClientProps) {
   const router = useRouter()
   const { toast } = useToast()
+  const [isPending, startTransition] = useTransition()
 
   const [patrimonios, setPatrimonios] = useState(initialPatrimonios)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [editingPatrimonio, setEditingPatrimonio] = useState<any>(null)
+  const [editingPatrimonio, setEditingPatrimonio] = useState<PatrimonioWithRelations | null>(null)
   const [searchTerm, setSearchTerm] = useState("")
   const [filterStatus, setFilterStatus] = useState<string>("")
   const [filterCategoria, setFilterCategoria] = useState<string>("")
@@ -61,49 +64,53 @@ export function PatrimonioListClient({
   const handleSuccess = () => {
     setIsDialogOpen(false)
     setEditingPatrimonio(null)
-    router.refresh() // Recarrega os dados do servidor
 
-    // Atualiza a lista localmente também
-    fetch('/api/patrimonio')
-      .then(res => res.json())
-      .then(data => setPatrimonios(data))
+    // Recarregar dados do servidor
+    startTransition(() => {
+      router.refresh()
+    })
   }
 
-  const handleEdit = (patrimonio: any) => {
+  const handleEdit = (patrimonio: PatrimonioWithRelations) => {
     setEditingPatrimonio(patrimonio)
     setIsDialogOpen(true)
   }
 
-  const handleDelete = async (patrimonio: any) => {
+  const handleDelete = async (patrimonio: PatrimonioWithRelations) => {
     if (!confirm(`Tem certeza que deseja excluir o patrimônio "${patrimonio.nome}"?`)) {
       return
     }
 
-    try {
-      const response = await fetch(`/api/patrimonio/${patrimonio.id}`, {
-        method: 'DELETE',
-      })
+    startTransition(async () => {
+      try {
+        const result = await deletePatrimonio(patrimonio.id)
 
-      if (!response.ok) {
-        throw new Error('Erro ao excluir patrimônio')
+        if (!result.success) {
+          toast({
+            title: "Erro",
+            description: result.error,
+            variant: "destructive",
+          })
+          return
+        }
+
+        toast({
+          title: "Patrimônio excluído",
+          description: `Patrimônio "${patrimonio.nome}" excluído com sucesso!`,
+        })
+
+        // Atualizar lista local e recarregar do servidor
+        setPatrimonios(patrimonios.filter(p => p.id !== patrimonio.id))
+        router.refresh()
+      } catch (error) {
+        console.error('Erro ao excluir:', error)
+        toast({
+          title: "Erro",
+          description: "Erro inesperado ao excluir patrimônio. Tente novamente.",
+          variant: "destructive",
+        })
       }
-
-      toast({
-        title: "Patrimônio excluído",
-        description: `Patrimônio "${patrimonio.nome}" excluído com sucesso!`,
-      })
-
-      // Atualiza a lista
-      setPatrimonios(patrimonios.filter(p => p.id !== patrimonio.id))
-      router.refresh()
-    } catch (error) {
-      console.error('Erro:', error)
-      toast({
-        title: "Erro",
-        description: "Erro ao excluir patrimônio. Tente novamente.",
-        variant: "destructive",
-      })
-    }
+    })
   }
 
   const openNewPatrimonioDialog = () => {
@@ -132,7 +139,7 @@ export function PatrimonioListClient({
             Gerencie o patrimônio da instituição
           </p>
         </div>
-        <Button onClick={openNewPatrimonioDialog}>
+        <Button onClick={openNewPatrimonioDialog} disabled={isPending}>
           <Plus className="h-4 w-4 mr-2" />
           Novo Patrimônio
         </Button>
@@ -275,6 +282,7 @@ export function PatrimonioListClient({
                       size="sm"
                       onClick={() => handleEdit(patrimonio)}
                       className="flex-1"
+                      disabled={isPending}
                     >
                       <Edit className="h-4 w-4 mr-1" />
                       Editar
@@ -284,6 +292,7 @@ export function PatrimonioListClient({
                       size="sm"
                       onClick={() => handleDelete(patrimonio)}
                       className="text-red-600 hover:text-red-700 flex-1"
+                      disabled={isPending}
                     >
                       <Trash2 className="h-4 w-4 mr-1" />
                       Excluir
@@ -424,4 +433,3 @@ export function PatrimonioListClient({
     </div>
   )
 }
-

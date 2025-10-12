@@ -1,16 +1,18 @@
 "use client"
 
-import { useState } from "react"
-import { Button } from "@/app/components/ui/button"
-import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select"
-import { DialogFooter } from "@/app/components/ui/dialog"
-import { useToast } from "@/app/hooks/use-toast"
-import { StatusItem } from "@/app/types"
+import { useState, useTransition } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { DialogFooter } from "@/components/ui/dialog"
+import { useToast } from "@/hooks/use-toast"
+import { StatusItem } from "@prisma/client"
+import { createPatrimonio, updatePatrimonio } from "@/lib/actions/patrimonio"
+import type { PatrimonioWithRelations } from "@/types/patrimonio"
 
 interface PatrimonioFormProps {
-  patrimonio?: any
+  patrimonio?: PatrimonioWithRelations | null
   categorias: Array<{ id: number; nome: string }>
   escolas: Array<{ id: number; nome: string }>
   onSuccess: () => void
@@ -19,7 +21,7 @@ interface PatrimonioFormProps {
 
 export function PatrimonioForm({ patrimonio, categorias, escolas, onSuccess, onCancel }: PatrimonioFormProps) {
   const { toast } = useToast()
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
   const [formData, setFormData] = useState({
     nome: patrimonio?.nome || "",
@@ -37,54 +39,63 @@ export function PatrimonioForm({ patrimonio, categorias, escolas, onSuccess, onC
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
 
-    try {
-      if (!formData.nome || !formData.categoriaPatrimonioId || !formData.escolaId || !formData.valorAquisicaoReais) {
-        toast({
-          title: "Erro",
-          description: "Preencha todos os campos obrigatórios",
-          variant: "destructive",
-        })
-        return
-      }
-
-      const url = patrimonio ? `/api/patrimonio/${patrimonio.id}` : '/api/patrimonio'
-      const method = patrimonio ? 'PATCH' : 'POST'
-
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          valorAtual: formData.valorAtual || formData.valorAquisicaoReais
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Erro ao salvar patrimônio')
-      }
-
-      toast({
-        title: "Sucesso",
-        description: patrimonio
-          ? "Patrimônio atualizado com sucesso!"
-          : "Patrimônio criado com sucesso!",
-      })
-
-      onSuccess()
-    } catch (error) {
-      console.error('Erro:', error)
+    // Validação básica no client
+    if (!formData.nome || !formData.categoriaPatrimonioId || !formData.escolaId || !formData.valorAquisicaoReais) {
       toast({
         title: "Erro",
-        description: "Erro ao salvar patrimônio. Tente novamente.",
+        description: "Preencha todos os campos obrigatórios",
         variant: "destructive",
       })
-    } finally {
-      setIsSubmitting(false)
+      return
     }
+
+    startTransition(async () => {
+      try {
+        // Preparar dados para envio
+        const inputData = {
+          nome: formData.nome,
+          descricao: formData.descricao || undefined,
+          escolaId: parseInt(formData.escolaId),
+          categoriaPatrimonioId: parseInt(formData.categoriaPatrimonioId),
+          dataAquisicao: new Date(formData.dataAquisicao),
+          valorAquisicaoReais: parseFloat(formData.valorAquisicaoReais),
+          valorAtual: formData.valorAtual ? parseFloat(formData.valorAtual) : undefined,
+          status: formData.status,
+          caracteristicas: formData.caracteristicas
+        }
+
+        // Chamar Server Action apropriada
+        const result = patrimonio
+          ? await updatePatrimonio(patrimonio.id, inputData)
+          : await createPatrimonio(inputData)
+
+        if (!result.success) {
+          toast({
+            title: "Erro",
+            description: result.error,
+            variant: "destructive",
+          })
+          return
+        }
+
+        toast({
+          title: "Sucesso",
+          description: patrimonio
+            ? "Patrimônio atualizado com sucesso!"
+            : "Patrimônio criado com sucesso!",
+        })
+
+        onSuccess()
+      } catch (error) {
+        console.error('Erro ao salvar patrimônio:', error)
+        toast({
+          title: "Erro",
+          description: "Erro inesperado ao salvar patrimônio. Tente novamente.",
+          variant: "destructive",
+        })
+      }
+    })
   }
 
   return (
@@ -98,6 +109,7 @@ export function PatrimonioForm({ patrimonio, categorias, escolas, onSuccess, onC
             onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
             placeholder="Ex: Projetor Epson EB-X41"
             required
+            disabled={isPending}
           />
         </div>
 
@@ -107,6 +119,7 @@ export function PatrimonioForm({ patrimonio, categorias, escolas, onSuccess, onC
             value={formData.categoriaPatrimonioId}
             onValueChange={(value) => setFormData({ ...formData, categoriaPatrimonioId: value })}
             required
+            disabled={isPending}
           >
             <SelectTrigger>
               <SelectValue placeholder="Selecione a categoria" />
@@ -127,6 +140,7 @@ export function PatrimonioForm({ patrimonio, categorias, escolas, onSuccess, onC
             value={formData.escolaId}
             onValueChange={(value) => setFormData({ ...formData, escolaId: value })}
             required
+            disabled={isPending}
           >
             <SelectTrigger>
               <SelectValue placeholder="Selecione a escola" />
@@ -149,6 +163,7 @@ export function PatrimonioForm({ patrimonio, categorias, escolas, onSuccess, onC
             value={formData.dataAquisicao}
             onChange={(e) => setFormData({ ...formData, dataAquisicao: e.target.value })}
             required
+            disabled={isPending}
           />
         </div>
 
@@ -163,6 +178,7 @@ export function PatrimonioForm({ patrimonio, categorias, escolas, onSuccess, onC
             onChange={(e) => setFormData({ ...formData, valorAquisicaoReais: e.target.value })}
             placeholder="0,00"
             required
+            disabled={isPending}
           />
         </div>
 
@@ -176,6 +192,7 @@ export function PatrimonioForm({ patrimonio, categorias, escolas, onSuccess, onC
             value={formData.valorAtual}
             onChange={(e) => setFormData({ ...formData, valorAtual: e.target.value })}
             placeholder="Deixe vazio para usar o valor de aquisição"
+            disabled={isPending}
           />
         </div>
 
@@ -184,6 +201,7 @@ export function PatrimonioForm({ patrimonio, categorias, escolas, onSuccess, onC
           <Select
             value={formData.status}
             onValueChange={(value) => setFormData({ ...formData, status: value as StatusItem })}
+            disabled={isPending}
           >
             <SelectTrigger>
               <SelectValue />
@@ -206,6 +224,7 @@ export function PatrimonioForm({ patrimonio, categorias, escolas, onSuccess, onC
           value={formData.descricao}
           onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
           placeholder="Descrição detalhada do patrimônio"
+          disabled={isPending}
         />
       </div>
 
@@ -214,15 +233,14 @@ export function PatrimonioForm({ patrimonio, categorias, escolas, onSuccess, onC
           type="button"
           variant="outline"
           onClick={onCancel}
-          disabled={isSubmitting}
+          disabled={isPending}
         >
           Cancelar
         </Button>
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Salvando..." : patrimonio ? "Atualizar" : "Criar"}
+        <Button type="submit" disabled={isPending}>
+          {isPending ? "Salvando..." : patrimonio ? "Atualizar" : "Criar"}
         </Button>
       </DialogFooter>
     </form>
   )
 }
-

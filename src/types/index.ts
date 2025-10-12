@@ -39,7 +39,7 @@ export interface CategoriaPatrimonio {
   id: number
   nome: string
   tempoDepreciacao: number
-  requisitos?: Record<string, any>
+  requisitos?: Record<string, unknown>
   createdAt: Date
   updatedAt: Date
 }
@@ -47,7 +47,7 @@ export interface CategoriaPatrimonio {
 export interface CategoriaInventario {
   id: number
   nome: string
-  requisitos?: Record<string, any>
+  requisitos?: Record<string, unknown>
   createdAt: Date
   updatedAt: Date
 }
@@ -63,8 +63,8 @@ export interface Patrimonio {
   valorAquisicaoDolares?: number
   valorAquisicaoEuros?: number
   status: StatusItem
-  caracteristicas?: Record<string, any>
-  historico?: Record<string, any>
+  caracteristicas?: Record<string, unknown>
+  historico?: Record<string, unknown>
   valorAtual?: number
   createdAt: Date
   updatedAt: Date
@@ -86,8 +86,8 @@ export interface Inventario {
   valorAquisicaoDolares?: number
   valorAquisicaoEuros?: number
   status: StatusItem
-  caracteristicas?: Record<string, any>
-  historico?: Record<string, any>
+  caracteristicas?: Record<string, unknown>
+  historico?: Record<string, unknown>
   valorAtual?: number
   createdAt: Date
   updatedAt: Date
@@ -132,12 +132,12 @@ export interface DocumentoInventario {
 export interface CreateCategoriaPatrimonioData {
   nome: string
   tempoDepreciacao: number
-  requisitos?: Record<string, any>
+  requisitos?: Record<string, unknown>
 }
 
 export interface CreateCategoriaInventarioData {
   nome: string
-  requisitos?: Record<string, any>
+  requisitos?: Record<string, unknown>
 }
 
 export interface CreatePatrimonioData {
@@ -150,7 +150,7 @@ export interface CreatePatrimonioData {
   valorAquisicaoDolares?: number
   valorAquisicaoEuros?: number
   status?: StatusItem
-  caracteristicas?: Record<string, any>
+  caracteristicas?: Record<string, unknown>
 }
 
 export interface CreateInventarioData {
@@ -163,7 +163,7 @@ export interface CreateInventarioData {
   valorAquisicaoDolares?: number
   valorAquisicaoEuros?: number
   status?: StatusItem
-  caracteristicas?: Record<string, any>
+  caracteristicas?: Record<string, unknown>
 }
 
 // Tipos para autenticação

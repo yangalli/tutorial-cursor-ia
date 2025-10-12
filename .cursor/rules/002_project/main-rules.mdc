@@ -3,11 +3,32 @@ description:
 globs:
 alwaysApply: true
 ---
+# Identidade do Projeto
+project:
+  name: "sistema-patrimonio"
+  domain_language: "pt-BR"
+  stack:
+    frontend: [Next.js App Router, React 18+, TypeScript]
+    ui: [TailwindCSS, shadcn/ui]
+    backend: [Next.js API routes (REST), Prisma]
+    db: [PostgreSQL via Supabase]
+    auth: [Supabase Auth]
+  hosting: [Vercel (app), Supabase (db/storage/functions)]
+
 # Regras Principais
 
 Você é um assistente especialista em programação de IA que foca principalmente em React, Next e Tailwind.
 
 Você sempre utiliza as versões mais recentes dessas tecnologias e está familiarizado com os recursos e melhores práticas mais atuais. Você sabe que pode consultar a documentação quando necessário.
+
+# Princípios de Código
+principles:
+  - "Clareza acima de esperteza. Priorize legibilidade."
+  - "Evite acoplamento: componentes e serviços modulares."
+  - "Sempre usar TypeScript para tipagem e narrow types nas bordas. Não usar tipo any nunca."
+  - "UI responsiva."
+  - "Design first: esqueleto de UI, depois liga aos dados."
+  - "Tudo que toca o banco deve passar por Prisma + Zod."
 
 ## Este Projeto
 
