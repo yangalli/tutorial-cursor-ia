@@ -1,36 +1,39 @@
-"use client"
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
+import { Button } from "@/app/components/ui/button"
 import { Building2, Package, TrendingUp, Users, FileText, BarChart3, Plus, ArrowUpRight, Activity, Tag } from "lucide-react"
+import { getDashboardData } from "@/lib/dashboard"
+import { formatCurrency } from "@/lib/utils"
 
-export default function DashboardPage() {
-  // Dados mockados para demonstração
-  const stats = [
+export default async function DashboardPage() {
+  // Buscar dados reais do banco de dados
+  const { stats, recentActivities, escolasResumo } = await getDashboardData()
+
+  // Configuração de cards de estatísticas
+  const statsCards = [
     {
       title: "Total de Patrimônio",
-      value: "R$ 2.450.000",
-      description: "+12% em relação ao mês anterior",
+      value: formatCurrency(stats.totalPatrimonio),
+      description: `${stats.percentualPatrimonio >= 0 ? '+' : ''}${stats.percentualPatrimonio.toFixed(1)}% em relação ao mês anterior`,
       icon: Building2,
-      trend: "up",
+      trend: stats.percentualPatrimonio >= 0 ? "up" : "down",
       color: "from-blue-500 to-blue-600",
       bgColor: "bg-blue-50",
       iconColor: "text-blue-600",
     },
     {
       title: "Total de Inventário",
-      value: "R$ 890.000",
-      description: "+8% em relação ao mês anterior",
+      value: formatCurrency(stats.totalInventario),
+      description: `${stats.percentualInventario >= 0 ? '+' : ''}${stats.percentualInventario.toFixed(1)}% em relação ao mês anterior`,
       icon: Package,
-      trend: "up",
+      trend: stats.percentualInventario >= 0 ? "up" : "down",
       color: "from-emerald-500 to-emerald-600",
       bgColor: "bg-emerald-50",
       iconColor: "text-emerald-600",
     },
     {
       title: "Itens Ativos",
-      value: "1.247",
-      description: "95% do total de itens",
+      value: stats.itensAtivos.toString(),
+      description: `${stats.percentualItensAtivos.toFixed(1)}% do total de itens`,
       icon: TrendingUp,
       trend: "up",
       color: "from-purple-500 to-purple-600",
@@ -39,48 +42,13 @@ export default function DashboardPage() {
     },
     {
       title: "Usuários Ativos",
-      value: "156",
-      description: "12 escolas cadastradas",
+      value: stats.usuariosAtivos.toString(),
+      description: `${escolasResumo.length} escolas cadastradas`,
       icon: Users,
       trend: "up",
       color: "from-orange-500 to-orange-600",
       bgColor: "bg-orange-50",
       iconColor: "text-orange-600",
-    },
-  ]
-
-  const recentActivities = [
-    {
-      id: 1,
-      action: "Novo patrimônio cadastrado",
-      item: "Projetor Epson EB-X41",
-      escola: "Escola Municipal São José",
-      time: "2 horas atrás",
-      type: "patrimonio",
-    },
-    {
-      id: 2,
-      action: "Inventário atualizado",
-      item: "Computadores Dell OptiPlex",
-      escola: "Escola Estadual João Silva",
-      time: "4 horas atrás",
-      type: "inventario",
-    },
-    {
-      id: 3,
-      action: "Categoria criada",
-      item: "Equipamentos de Laboratório",
-      escola: "Sistema",
-      time: "1 dia atrás",
-      type: "categoria",
-    },
-    {
-      id: 4,
-      action: "Relatório gerado",
-      item: "Relatório Mensal - Dezembro 2024",
-      escola: "Escola Municipal São José",
-      time: "2 dias atrás",
-      type: "relatorio",
     },
   ]
 
@@ -143,7 +111,7 @@ export default function DashboardPage() {
 
       {/* Cards de estatísticas */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => (
+        {statsCards.map((stat) => (
           <Card key={stat.title} className="group relative overflow-hidden border-0 bg-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
             <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-5`} />
             <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2">
@@ -157,7 +125,7 @@ export default function DashboardPage() {
             <CardContent className="relative">
               <div className="text-3xl font-bold text-gray-900">{stat.value}</div>
               <div className="mt-2 flex items-center gap-2">
-                <div className="flex items-center gap-1 text-xs text-green-600">
+                <div className={`flex items-center gap-1 text-xs ${stat.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
                   <ArrowUpRight className="h-3 w-3" />
                   {stat.description}
                 </div>
@@ -233,36 +201,37 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent className="p-6">
               <div className="space-y-4">
-                {[
-                  { nome: "Escola Municipal São José", valor: "R$ 450.000", itens: 89, percentage: 35 },
-                  { nome: "Escola Estadual João Silva", valor: "R$ 380.000", itens: 76, percentage: 30 },
-                  { nome: "Escola Particular ABC", valor: "R$ 520.000", itens: 102, percentage: 40 },
-                  { nome: "Escola Técnica XYZ", valor: "R$ 290.000", itens: 58, percentage: 25 },
-                ].map((escola, index) => (
-                  <div key={index} className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900 truncate">
-                          {escola.nome}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {escola.itens} itens
-                        </p>
+                {escolasResumo.length > 0 ? (
+                  escolasResumo.map((escola) => (
+                    <div key={escola.id} className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900 truncate">
+                            {escola.nome}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {escola.itens} itens
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-sm font-bold text-gray-900">
+                            {formatCurrency(escola.valor)}
+                          </p>
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <p className="text-sm font-bold text-gray-900">
-                          {escola.valor}
-                        </p>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div
+                          className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${escola.percentage}%` }}
+                        />
                       </div>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
-                        style={{ width: `${escola.percentage}%` }}
-                      />
-                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    <p className="text-sm">Nenhuma escola cadastrada ainda</p>
                   </div>
-                ))}
+                )}
               </div>
             </CardContent>
           </Card>

@@ -1,17 +1,17 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useToast } from "@/hooks/use-toast"
-import { 
-  BarChart3, 
-  TrendingUp, 
-  TrendingDown, 
-  DollarSign, 
-  Building2, 
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
+import { Button } from "@/app/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs"
+import { useToast } from "@/app/hooks/use-toast"
+import {
+  BarChart3,
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
+  Building2,
   Package,
   Download,
   Calendar,
@@ -107,7 +107,7 @@ export default function RelatoriosPage() {
   const [periodoSelecionado, setPeriodoSelecionado] = useState("6meses")
   const [escolaSelecionada, setEscolaSelecionada] = useState("todas")
   const [activeTab, setActiveTab] = useState("overview")
-  
+
   const { toast } = useToast()
 
   const handleDownloadRelatorio = (tipo: string) => {
@@ -159,7 +159,7 @@ export default function RelatoriosPage() {
               <SelectItem value="1ano">Último Ano</SelectItem>
             </SelectContent>
           </Select>
-          
+
           <Select value={escolaSelecionada} onValueChange={setEscolaSelecionada}>
             <SelectTrigger className="w-48">
               <SelectValue />
@@ -264,8 +264,8 @@ export default function RelatoriosPage() {
                           <span className="text-muted-foreground">{formatCurrency(item.valor)}</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div 
-                            className="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+                          <div
+                            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
                             style={{ width: `${percentual}%` }}
                           ></div>
                         </div>
@@ -296,8 +296,8 @@ export default function RelatoriosPage() {
                           <span className="text-muted-foreground">{formatCurrency(item.valor)}</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div 
-                            className="bg-green-600 h-2 rounded-full transition-all duration-300" 
+                          <div
+                            className="bg-green-600 h-2 rounded-full transition-all duration-300"
                             style={{ width: `${percentual}%` }}
                           ></div>
                         </div>
@@ -352,8 +352,8 @@ export default function RelatoriosPage() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={() => handleDownloadRelatorio("patrimonio")}
                   className="h-auto p-4 flex-col gap-2"
                 >
@@ -361,9 +361,9 @@ export default function RelatoriosPage() {
                   <span>Relatório de Patrimônio</span>
                   <span className="text-xs text-muted-foreground">PDF • Excel</span>
                 </Button>
-                
-                <Button 
-                  variant="outline" 
+
+                <Button
+                  variant="outline"
                   onClick={() => handleDownloadRelatorio("inventario")}
                   className="h-auto p-4 flex-col gap-2"
                 >
@@ -371,9 +371,9 @@ export default function RelatoriosPage() {
                   <span>Relatório de Inventário</span>
                   <span className="text-xs text-muted-foreground">PDF • Excel</span>
                 </Button>
-                
-                <Button 
-                  variant="outline" 
+
+                <Button
+                  variant="outline"
                   onClick={() => handleDownloadRelatorio("depreciacao")}
                   className="h-auto p-4 flex-col gap-2"
                 >
@@ -381,9 +381,9 @@ export default function RelatoriosPage() {
                   <span>Relatório de Depreciação</span>
                   <span className="text-xs text-muted-foreground">PDF • Excel</span>
                 </Button>
-                
-                <Button 
-                  variant="outline" 
+
+                <Button
+                  variant="outline"
                   onClick={() => handleDownloadRelatorio("consolidado")}
                   className="h-auto p-4 flex-col gap-2"
                 >
@@ -416,8 +416,8 @@ export default function RelatoriosPage() {
                         </span>
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div 
-                          className="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+                        <div
+                          className="bg-blue-600 h-2 rounded-full transition-all duration-300"
                           style={{ width: `${(item.depreciado / item.valor) * 100}%` }}
                         ></div>
                       </div>
@@ -502,8 +502,8 @@ export default function RelatoriosPage() {
                           <span className="text-muted-foreground">{formatCurrency(item.valor)}</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div 
-                            className="bg-green-600 h-2 rounded-full transition-all duration-300" 
+                          <div
+                            className="bg-green-600 h-2 rounded-full transition-all duration-300"
                             style={{ width: `${percentual}%` }}
                           ></div>
                         </div>
@@ -535,7 +535,7 @@ export default function RelatoriosPage() {
                     </div>
                     <Button variant="outline" size="sm">Ver Detalhes</Button>
                   </div>
-                  
+
                   <div className="flex items-center justify-between p-3 bg-red-50 rounded-lg border border-red-200">
                     <div className="flex items-center gap-3">
                       <AlertTriangle className="h-5 w-5 text-red-600" />
@@ -596,8 +596,8 @@ export default function RelatoriosPage() {
                           <span className="text-muted-foreground">{item.quantidade}</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div 
-                            className="bg-purple-600 h-2 rounded-full transition-all duration-300" 
+                          <div
+                            className="bg-purple-600 h-2 rounded-full transition-all duration-300"
                             style={{ width: `${percentual}%` }}
                           ></div>
                         </div>

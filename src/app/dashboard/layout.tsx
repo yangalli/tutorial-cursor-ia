@@ -2,14 +2,11 @@
 
 import { useState } from "react"
 import { useRouter, usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/app/components/ui/button"
 import {
   Building2,
   Package,
-  ClipboardList,
   BarChart3,
-  Settings,
-  LogOut,
   Menu,
   X,
   Home,
@@ -17,7 +14,6 @@ import {
   FileText
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { useToast } from "@/hooks/use-toast"
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: Home },
@@ -36,15 +32,6 @@ export default function DashboardLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
-  const { toast } = useToast()
-
-  const handleLogout = () => {
-    toast({
-      title: "Logout",
-      description: "Saindo do sistema...",
-    })
-    router.push("/login")
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -87,16 +74,6 @@ export default function DashboardLayout({
               )
             })}
           </nav>
-          <div className="border-t border-gray-200 p-4">
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-red-600 hover:bg-red-50 hover:text-red-700"
-              onClick={handleLogout}
-            >
-              <LogOut className="mr-3 h-5 w-5" />
-              Sair
-            </Button>
-          </div>
         </div>
       </div>
 
@@ -125,16 +102,6 @@ export default function DashboardLayout({
               )
             })}
           </nav>
-          <div className="border-t border-gray-200 p-4">
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-red-600 hover:bg-red-50 hover:text-red-700"
-              onClick={handleLogout}
-            >
-              <LogOut className="mr-3 h-5 w-5" />
-              Sair
-            </Button>
-          </div>
         </div>
       </div>
 

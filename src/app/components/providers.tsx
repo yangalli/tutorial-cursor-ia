@@ -1,6 +1,6 @@
 "use client"
 
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/app/components/ui/toaster"
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (

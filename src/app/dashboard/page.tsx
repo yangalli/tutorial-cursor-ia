@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Building2, Package, DollarSign, TrendingUp, Users, FileText, BarChart3 } from "lucide-react"
 
 export default function DashboardPage() {

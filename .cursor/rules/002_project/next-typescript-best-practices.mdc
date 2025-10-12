@@ -6,7 +6,7 @@ alwaysApply: false
 # Next.js + TypeScript Melhores Práticas
 
 - Use roteamento baseado em arquivos e mantenha as rotas limpas e RESTful
-- Co-locar componentes com seu uso quando apropriado
+- Colocar componentes com seu uso quando apropriado
 - Use o diretório `srcapp/` (Next.js 13+) e componentes de servidor sempre que possível
 - Prefira React Server Components (RSC) para conteúdo não interativo
 - Use a diretiva `use client` somente quando necessário

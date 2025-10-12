@@ -7,8 +7,8 @@ export default function HomePage() {
   const router = useRouter()
 
   useEffect(() => {
-    // Redirecionar para a página de login
-    router.push("/login")
+    // Redirecionar diretamente para o dashboard
+    router.push("/dashboard")
   }, [router])
 
   return (
@@ -17,7 +17,7 @@ export default function HomePage() {
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
           Sistema de Patrimônio
         </h1>
-        <p className="text-gray-600">Redirecionando para login...</p>
+        <p className="text-gray-600">Carregando...</p>
       </div>
     </div>
   )
